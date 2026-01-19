@@ -101,3 +101,13 @@ node /path/to/strapi-import-export-tool/index.js import ./path/to/export-file.ta
 To modify this tool:
 1.  Edit files in `lib/`.
 2.  Test changes by running `node index.js export` from a valid Strapi project directory.
+
+## Disclaimer
+
+**USE AT YOUR OWN RISK.**
+
+This software is provided "as is", without warranty of any kind, express or implied. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
+
+**ALWAYS BACKUP YOUR DATABASE AND MEDIA FILES BEFORE RUNNING IMPORT OPERATIONS.**
+This tool performs create, update, and delete operations on your database and file system.
+
