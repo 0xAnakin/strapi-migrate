@@ -57,14 +57,31 @@ The tool generates an export archive in the `export-data/` folder at your projec
 Run the import command from the target Strapi project root.
 
 ```bash
-npx /path/to/strapi-import-export-tool import ./path/to/export-2026-01-19.tar.gz
+# Standard Import (Upsert/Update existing)
+node /path/to/strapi-import-export-tool/index.js import ./path/to/export-file.tar.gz
+
+# Clean Import (Delete matching entries & media first)
+node /path/to/strapi-import-export-tool/index.js import ./path/to/export-file.tar.gz --clean
+
+# Cleanup Only (Delete matching entries & media, do not import)
+node /path/to/strapi-import-export-tool/index.js import ./path/to/export-file.tar.gz --clean-no-import
 ```
+
+**Options:**
+-   `--clean`: **Targeted Deletion:** Scopes deletion *strictly* to the items found in the export file.
+    -   **Collection Types:** Deletes local entries matching `documentId`s from the export.
+    -   **Single Types:** Deletes the existing local single entry (since there can be only one) to replace it.
+    -   **Media:** Deletes local files matching the **hashes** in the export.
+    *Using this flag ensures a fresh import for specific content without wiping the entire database.*
+-   `--clean-no-import`: Performs the targeted deletion step described above and then exits without importing. Useful for selectively removing content packages.
 
 **Process:**
 1.  Extracts the archive to a temporary directory.
-2.  Imports media files into `public/uploads` and creates/links database entries.
-3.  Imports content entries, replacing old media IDs with the new ones.
-4.  Cleans up temporary files.
+2.  (If `--clean` or `--clean-no-import`) Deletes existing database entries matching the export manifest.
+3.  (If `--clean` or `--clean-no-import`) Deletes existing media files matching the export manifest (from DB and disk).
+4.  (Unless `--clean-no-import`) Imports media files into `public/uploads` and creates/links database entries.
+5.  (Unless `--clean-no-import`) Imports content entries (Phase 1: Creation, Phase 2: Relation Linking).
+6.  Cleans up temporary files.
 
 ## Technical Details
 

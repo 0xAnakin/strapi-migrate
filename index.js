@@ -30,8 +30,10 @@ program.command('export')
 program.command('import')
   .description('Import data from a tar.gz archive or folder')
   .argument('<path>', 'Path to the export archive or directory')
-  .action((path) => {
-    runImport(path);
+  .option('--clean', 'Delete entries matching the export before importing')
+  .option('--clean-no-import', 'Only delete entries matching the export without importing')
+  .action((path, options) => {
+    runImport(path, options);
   });
 
 program.parse();
