@@ -15,8 +15,9 @@ program
 program.command('export')
   .description('Export content types and media from the current Strapi project')
   .argument('[types...]', 'Space-separated list of content type UIDs (e.g. api::article.article). If empty, interactive mode starts.')
-  .action((types) => {
-    runExport(types);
+  .option('--all', 'Export all API content types without prompting')
+  .action((types, options) => {
+    runExport(types, options);
   });
 
 program.command('import')
