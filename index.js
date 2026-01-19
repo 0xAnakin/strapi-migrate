@@ -9,7 +9,7 @@ const fs = require('fs');
 
 const program = new Command();
 
-console.warn('DISCLAIMER: This tool is provided "as is" without warranty of any kind. Use at your own risk. Always backup your data.');
+console.warn('\nDISCLAIMER: This tool is provided "as is" without warranty of any kind. Use at your own risk. Always backup your data.\n');
 
 
 // Ensure we are in a Strapi project if not specified? 
