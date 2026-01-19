@@ -6,6 +6,7 @@ A powerful, standalone CLI utility designed to facilitate the migration of conte
 
 -   **Interactive Export:** Select which Content Types (Collection Types & Single Types) to export using an interactive checklist.
 -   **Media Awareness:** recursivley scans exported content to find and link associated media files (images, videos, files).
+-   **State Preservation:** Correctly handles Strapi v5's Draft & Publish system. Exports the latest draft content while preserving the 'Published' status if applicable, ensuring content is re-published correctly upon import.
 -   **Portable Archives:** Bundles JSON data and physical media files into a compressed `.tar.gz` file.
 -   **Smart Import:**
     -   **Media Deduplication:** Checks file hashes to prevent creating duplicate media entries if the file already exists in the target Strapi.
