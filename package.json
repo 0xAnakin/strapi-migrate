@@ -33,7 +33,7 @@
   "dependencies": {
     "commander": "^11.1.0",
     "dotenv": "^16.3.1",
-    "inquirer": "^9.2.12",
+    "inquirer": "^8.2.6",
     "tar": "^6.2.0"
   },
   "peerDependencies": {
