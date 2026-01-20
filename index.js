@@ -18,7 +18,7 @@ console.warn('\nDISCLAIMER: This tool is provided "as is" without warranty of an
 
 
 program
-  .name('strapi-tool')
+  .name('strapi-migrate')
   .description('CLI tool for Strapi v5 Import/Export')
   .version(packageJson.version);
 

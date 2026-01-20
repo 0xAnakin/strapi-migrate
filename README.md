@@ -1,4 +1,4 @@
-# Strapi v5 Import/Export CLI Tool
+# Strapi Migrate (strapi-migrate)
 
 A powerful, standalone CLI utility designed to facilitate the migration of content and media between Strapi v5 installations. This tool handles complex content relationships, media file associations, and full localization, packaging everything into a portable `.tar.gz` archive.
 
@@ -27,10 +27,10 @@ You can install this tool globally, run it using `npx`, or clone it locally.
 
 ```bash
 # Run directly from source using npx (recommended)
-npx /path/to/strapi-import-export-tool <command>
+npx /path/to/strapi-migrate <command>
 
 # Or using node directly
-node /path/to/strapi-import-export-tool/index.js <command>
+node /path/to/strapi-migrate/index.js <command>
 ```
 
 ## Usage
@@ -43,9 +43,9 @@ Run the export command from your Strapi project root.
 If you don't specify any content types, the tool will fetch all `api::` content types and present a selection list.
 
 ```bash
-npx /path/to/strapi-import-export-tool export
+npx /path/to/strapi-migrate export
 # OR
-node /path/to/strapi-import-export-tool/index.js export
+node /path/to/strapi-migrate/index.js export
 ```
 
 **Options:**
@@ -61,13 +61,13 @@ Run the import command from the target Strapi project root. The tool extracts te
 
 ```bash
 # Standard Import (Upsert/Update existing)
-npx /path/to/strapi-import-export-tool import ./path/to/export-file.tar.gz
+npx /path/to/strapi-migrate import ./path/to/export-file.tar.gz
 
 # Clean Import (Delete matching entries & media first)
-npx /path/to/strapi-import-export-tool import ./path/to/export-file.tar.gz --clean
+npx /path/to/strapi-migrate import ./path/to/export-file.tar.gz --clean
 
 # Cleanup Only (Delete matching entries & media, do not import)
-npx /path/to/strapi-import-export-tool import ./path/to/export-file.tar.gz --clean-no-import
+npx /path/to/strapi-migrate import ./path/to/export-file.tar.gz --clean-no-import
 ```
 
 **Options:**

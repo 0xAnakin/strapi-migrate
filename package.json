@@ -1,10 +1,10 @@
 {
-  "name": "strapi-import-export-tool",
-  "version": "1.2.1",
+  "name": "strapi-migrate",
+  "version": "1.0.0",
   "description": "A CLI tool to export and import data from Strapi v5, including media files.",
   "main": "index.js",
   "bin": {
-    "strapi-tool": "./index.js"
+    "strapi-migrate": "./index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,12 +20,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/0xAnakin/strapi-import-export-tool.git"
+    "url": "git+https://github.com/0xAnakin/strapi-migrate.git"
   },
   "bugs": {
-    "url": "https://github.com/0xAnakin/strapi-import-export-tool/issues"
+    "url": "https://github.com/0xAnakin/strapi-migrate/issues"
   },
-  "homepage": "https://github.com/0xAnakin/strapi-import-export-tool#readme",
+  "homepage": "https://github.com/0xAnakin/strapi-migrate#readme",
   "files": [
     "index.js",
     "lib"
