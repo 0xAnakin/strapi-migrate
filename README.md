@@ -16,6 +16,8 @@ A powerful, standalone CLI utility designed to facilitate the migration of conte
     -   **ID Remapping:** Automatically updates content to point to the correct Media IDs in the new database.
     -   **Relation Linking:** Handles complex relations, including deep component/dynamic zone references.
     -   **Targeted Cleanup:** Optional flags to clean specifically the exported content from the destination before import.
+    -   **JIT Schema Repair:** Automatically detects if a project is crashed due to missing schemas during a cleanup operation, copies the necessary files from the export, and reloads Strapi to proceed safely.
+    -   **Structured Logging:** Provides clear, indented, and detailed feedback for every operation (Creates, Updates, Links, Deletions).
 
 ## Prerequisites
 
