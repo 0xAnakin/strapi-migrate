@@ -69,6 +69,7 @@ node /path/to/strapi-migrate/index.js export
 
 **Options:**
 -   `--all`: Export all API content types without prompting.
+-   `--dry-run`: Evaluate what would be exported without creating an archive or copying files.
 -   `<types...>`: Specify content types directly (e.g., `api::article.article`).
 
 **Output:**
@@ -76,11 +77,17 @@ The tool generates an export archive in the `export-data/` folder at your projec
 
 ### Importing Data
 
-Run the import command from the target Strapi project root. The tool extracts temporary files to a `temp-<archive-name>` folder in the same directory as the archive to manage large files properly.
+Run the import command from the target Strapi project root. The tool accepts a **local file path** or a **remote URL**.
 
 ```bash
-# Standard Import (Upsert/Update existing)
+# Standard Import (Local File)
 npx /path/to/strapi-migrate import ./path/to/export-file.tar.gz
+
+# Remote Import (URL)
+npx /path/to/strapi-migrate import "https://example.com/backups/export.tar.gz"
+
+# Dry Run (Simulate import without changes)
+npx /path/to/strapi-migrate import ./export.tar.gz --dry-run
 
 # Clean Import (Delete matching entries & media first)
 npx /path/to/strapi-migrate import ./path/to/export-file.tar.gz --clean
@@ -90,6 +97,7 @@ npx /path/to/strapi-migrate import ./path/to/export-file.tar.gz --clean --skip-i
 ```
 
 **Options:**
+-   `--dry-run`: **Simulation Mode:** Downloads/Extracts the archive and lists all operations (Creates, Updates, Deletions) that *would* be performed, without modifying the database or file system.
 -   `--clean`: **Targeted Deletion:** Scopes deletion *strictly* to the items found in the export file.
     -   **Collection Types:** Deletes local entries matching `documentId`s from the export.
     -   **Single Types:** Deletes existing local entries to ensure a fresh state.
@@ -129,4 +137,5 @@ This software is provided "as is", without warranty of any kind, express or impl
 
 **ALWAYS BACKUP YOUR DATABASE AND MEDIA FILES BEFORE RUNNING IMPORT OPERATIONS.**
 This tool performs create, update, and delete operations on your database and file system.
+
 
