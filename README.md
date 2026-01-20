@@ -19,25 +19,44 @@ A powerful, standalone CLI utility designed to facilitate the migration of conte
 ## Prerequisites
 
 -   **Strapi v5:** This tool is designed for Strapi v5 architecture (using the Document Service API).
--   **Execution Context:** You must run this tool **from the root directory** of your Strapi project. It relies on loading the `@strapi/core` from your project's `node_modules` and reading your project's configuration.
+-   **Execution Context:** You must run this tool **from the root directory** of your Strapi project. It relies on loading the `@strapi/strapi` from your project's `node_modules` and reading your project's configuration.
 
 ## Installation
 
 You can install this tool globally, run it using `npx`, or clone it locally.
 
-```bash
-# Run directly from source using npx (recommended)
-npx /path/to/strapi-migrate <command>
+### Running from Source (Local Development)
 
-# Or using node directly
-node /path/to/strapi-migrate/index.js <command>
+```bash
+# Clone the repository
+git clone https://github.com/0xAnakin/strapi-migrate.git
+cd strapi-migrate
+
+# Install dependencies
+npm install
+
+# Link globally (optional)
+npm link
 ```
 
-## Usage
+### Usage
+
+**If linked globally:**
+```bash
+strapi-migrate export
+strapi-migrate import <archive>
+```
+
+**If running with Node directly:**
+```bash
+node /absolute/path/to/strapi-migrate/index.js export
+```
+
+## Usage (Detailed)
 
 ### Exporting Data
 
-Run the export command from your Strapi project root.
+Run the export command from your **Strapi project root**.
 
 **Interactive Mode:**
 If you don't specify any content types, the tool will fetch all `api::` content types and present a selection list.
@@ -97,6 +116,12 @@ npx /path/to/strapi-migrate import ./path/to/export-file.tar.gz --clean --skip-i
 -   **Strapi Integration:** Uses Strapi v5's `strapi.documents` service for advanced content handling (drafts, locales, document IDs) and the Entity Service for media.
 
 ## Disclaimer
+
+This tool is provided "as is" without warranty of any kind, express or implied. The authors are not responsible for any data loss or damage that may occur when using this tool.
+
+**ALWAYS BACKUP YOUR EXPORT DATA AND YOUR DATABASE BEFORE RUNNING EXPORT/IMPORT OPERATIONS.**
+
+It is strongly recommended to test migrations in a development or staging environment before applying them to production.
 
 **USE AT YOUR OWN RISK.**
 

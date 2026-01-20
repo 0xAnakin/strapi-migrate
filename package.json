@@ -1,6 +1,6 @@
 {
   "name": "strapi-migrate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A CLI tool to export and import data from Strapi v5, including media files.",
   "main": "index.js",
   "bin": {
@@ -32,12 +32,11 @@
   ],
   "dependencies": {
     "commander": "^11.1.0",
-    "dotenv": "^16.3.1",
     "inquirer": "^8.2.6",
     "tar": "^6.2.0"
   },
   "peerDependencies": {
-    "@strapi/core": "^5.0.0"
+    "@strapi/strapi": "^5.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
