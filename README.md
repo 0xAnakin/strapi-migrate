@@ -16,7 +16,7 @@ A powerful, standalone CLI utility designed to facilitate the migration of conte
     -   **ID Remapping:** Automatically updates content to point to the correct Media IDs in the new database.
     -   **Relation Linking:** Handles complex relations, including deep component/dynamic zone references.
     -   **Targeted Cleanup:** Optional flags to clean specifically the exported content from the destination before import.
-    -   **JIT Schema Repair:** Automatically detects if a project is crashed due to missing schemas during a cleanup operation, copies the necessary files from the export, and reloads Strapi to proceed safely.
+    -   **Schema Repair:** Automatically detects missing schema definitions and copies necessary files (`src/api`, `src/components`) from the export. *Note: If new schemas are added, a second import run is required as Strapi must restart to load them.*
     -   **Structured Logging:** Provides clear, indented, and detailed feedback for every operation (Creates, Updates, Links, Deletions).
 
 ## Prerequisites
@@ -83,6 +83,8 @@ The tool generates an export archive in the `export-data/` folder at your projec
 Run the import command from the target Strapi project root. The tool accepts a **local file path** or a **remote URL**.
 
 The import process now handles **Source Code Synchronization** automatically. If your export archive contains schema definitions (`src/api` and `src/components`), they will be imported and will overwrite existing files to ensure the schema matches the content.
+
+**Important:** If you are importing new Content Types that do not exist in the target project, Strapi will not recognize them on the first run. You must run the import command a second time so Strapi can load the newly created schema files.
 
 ```bash
 # Standard Import (Local File)
