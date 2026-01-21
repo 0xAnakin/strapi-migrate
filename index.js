@@ -26,6 +26,8 @@ program.command('export')
   .description('Export content types and media from the current Strapi project')
   .argument('[types...]', 'Space-separated list of content type UIDs (e.g. api::article.article). If empty, interactive mode starts.')
   .option('--all', 'Export all API content types without prompting')
+  .option('--filter-api <pattern>', 'Filter content types by matching regex against their collectionName')
+  .option('--filter-components <pattern>', 'Filter components by matching regex against their collectionName')
   .option('--dry-run', 'LIST what would be exported without creating an archive')
   .action((types, options) => {
     runExport(types, options);

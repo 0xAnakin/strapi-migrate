@@ -72,6 +72,8 @@ node /path/to/strapi-migrate/index.js export
 
 **Options:**
 -   `--all`: Export all API content types without prompting.
+-   `--filter-api <pattern>`: Filter content types by matching regex against their `collectionName`. (e.g., `^api::category.*`)
+-   `--filter-components <pattern>`: Filter components by matching regex against their `collectionName`. useful for restricting the schema source code export.
 -   `--dry-run`: Evaluate what would be exported without creating an archive or copying files.
 -   `<types...>`: Specify content types directly (e.g., `api::article.article`).
 
