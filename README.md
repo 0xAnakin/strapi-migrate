@@ -9,20 +9,22 @@ A powerful, standalone CLI utility designed to facilitate the migration of conte
 -   **View Configuration Transfer:** Automatically exports and imports the Admin Panel layout (Content Manager view configuration) for each content type.
 -   **Source Code Sync:** Automatically enables the transfer of schema definitions (`src/api` and `src/components`). Ensures that the content structure in the destination matches the data being imported.
 -   **Media Awareness:** Recursively scans exported content to find and link associated media files (images, videos, files).
--   **State Preservation:** Correctly handles Strapi v5's Draft & Publish system across all locales. Exports the latest drafts while preserving the 'Published' status if applicable.
+-   **State Preservation:** Correctly handles Strapi v5's Draft & Publish system across all locales. Exports the latest drafts while preserving the 'Published' status. Smartly handles Content Types with "Draft & Publish" disabled by enforcing published status during import.
 -   **Portable Archives:** Bundles JSON data and physical media files into a compressed `.tar.gz` file.
 -   **Smart Import:**
     -   **Media Deduplication:** Checks file hashes to prevent creating duplicate media entries if the file already exists in the target Strapi.
     -   **ID Remapping:** Automatically updates content to point to the correct Media IDs in the new database.
     -   **Relation Linking:** Handles complex relations, including deep component/dynamic zone references.
+    -   **Auto-Locale Creation:** Automatically detects locales used in the export and creates them in the target Strapi if they are missing.
     -   **Targeted Cleanup:** Optional flags to clean specifically the exported content from the destination before import.
-    -   **Schema Repair:** Automatically detects missing schema definitions and copies necessary files (`src/api`, `src/components`) from the export. *Note: If new schemas are added, a second import run is required as Strapi must restart to load them.*
+    -   **Schema Sync (Pre-Boot):** Automatically detects and copies missing schema definitions (`src/api`, `src/components`) from the export *before* Strapi boots. This ensures the database schema updates immediately without requiring a restart or second run.
     -   **Structured Logging:** Provides clear, indented, and detailed feedback for every operation (Creates, Updates, Links, Deletions).
 
 ## Prerequisites
 
 -   **Strapi v5:** This tool is designed for Strapi v5 architecture (using the Document Service API).
 -   **Execution Context:** You must run this tool **from the root directory** of your Strapi project. It relies on loading the `@strapi/strapi` from your project's `node_modules` and reading your project's configuration.
+-   **Strapi Offline:** Ensure your Strapi server is **NOT running** (stop `npm run develop` or similar commands). The tool boots its own internal Strapi instance to perform operations and requires exclusive access to the database and schema files.
 
 ## Installation
 
@@ -43,6 +45,10 @@ npm link
 ```
 
 ### Usage
+
+> **⚠️ CRITICAL: STOP YOUR STRAPI SERVER**
+> Before running any export or import commands, ensure your local Strapi server is **completely shut down**.
+> This tool boots its own internal Strapi instance. Running it simultaneously with a dev server will cause database locking issues, file permission errors, and potential data corruption.
 
 **If linked globally:**
 ```bash
@@ -84,9 +90,9 @@ The tool generates an export archive in the `export-data/` folder at your projec
 
 Run the import command from the target Strapi project root. The tool accepts a **local file path** or a **remote URL**.
 
-The import process now handles **Source Code Synchronization** automatically. If your export archive contains schema definitions (`src/api` and `src/components`), they will be imported and will overwrite existing files to ensure the schema matches the content.
+The import process now handles **Source Code Synchronization** automatically. If your export archive contains schema definitions (`src/api` and `src/components`), they will be imported **BEFORE** Strapi boots. This ensures that Strapi loads the correct schema configuration (including localization settings) from the start, preventing data loss for localized entries.
 
-**Important:** If you are importing new Content Types that do not exist in the target project, Strapi will not recognize them on the first run. You must run the import command a second time so Strapi can load the newly created schema files.
+**Important:** If you are importing new Content Types that do not exist in the target project, the tool will automatically trigger a database schema update during the boot process. You do **not** need to run the import twice.
 
 ```bash
 # Standard Import (Local File)
@@ -134,14 +140,16 @@ npx /path/to/strapi-migrate import ./export.tar.gz
 
 **Import Process:**
 1.  **Extraction:** Extracts the archive to a localized `temp-export-name` folder.
-2.  **Cleanup:** (If `--clean`) Deletes existing DB entries, schema files, and media matches, then EXITS.
-3.  **Media Import:** Imports files into `public/uploads` and creates/links DB entries.
-4.  **Schema Import:** Updates `src/api` and `src/components` (unless `--skip-schema`).
-5.  **View Configuration:** Restores Content Manager layouts (views).
-6.  **Content Creation:** Creates or updates content entries for all locales.
-7.  **Relation Linking:** Updates entries to link relations.
-8.  **Publishing:** Publishes entries.
-9.  **Cleanup:** Removes the temporary extraction folder.
+2.  **Schema Import:** Updates `src/api` and `src/components` (unless `--skip-schema`). **This happens before Strapi boots.**
+3.  **Boot Phase:** Loads the local Strapi instance (which sees the new schema and updates the DB).
+4.  **Cleanup:** (If `--clean`) Deletes existing DB entries, schema files, and media matches, then EXITS.
+5.  **Media Import:** Imports files into `public/uploads` and creates/links DB entries.
+6.  **View Configuration:** Restores Content Manager layouts (views).
+7.  **Locale Configuration:** Checks and creates missing locales.
+8.  **Content Creation:** Creates or updates content entries for all locales.
+9.  **Relation Linking:** Updates entries to link relations.
+10. **Publishing:** Publishes entries.
+11. **Cleanup:** Removes the temporary extraction folder.
 
 ## Technical Details
 
