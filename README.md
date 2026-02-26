@@ -19,6 +19,7 @@ A CLI tool for migrating content, media, and schemas between Strapi v5 installat
 - [Workflows](#workflows)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
+- [Sponsor](#sponsor)
 
 ## Features
 
@@ -303,4 +304,8 @@ MIT (c) [0xAnakin](https://github.com/0xAnakin)
 
 ---
 
-<a href="https://open.gr"><img src="./assets/technopolis-logo.svg" alt="Technopolis" width="220"></a>
+## Sponsor
+
+<a href="https://open.gr"><img src="./assets/technopolis-logo.svg" alt="Technopolis" width="320"></a>
+
+<sub>Project maintained by [0xAnakin](https://github.com/0xAnakin) and proudly supported by [Technopolis SA](https://open.gr),<br>which provides dedicated time to enhance this tool for the Strapi community.</sub>
