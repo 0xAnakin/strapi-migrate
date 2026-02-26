@@ -300,3 +300,7 @@ MIT (c) [0xAnakin](https://github.com/0xAnakin)
 ---
 
 **Disclaimer**: Use at your own risk. Always backup your database and files before running import operations.
+
+---
+
+<a href="https://open.gr"><img src="./assets/technopolis-logo.svg" alt="Technopolis" width="220"></a>
