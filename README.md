@@ -27,6 +27,7 @@ A CLI tool for migrating content, media, and schemas between Strapi v5 installat
 - Interactive content type selection or CLI-based filtering
 - Automatic relation resolution across content types
 - Full localization support with publication states
+- Published-only Strapi v5 documents are exported alongside draft variants
 - Media file discovery and bundling
 - Schema and component definition export
 - Content Manager layout preservation
@@ -35,7 +36,8 @@ A CLI tool for migrating content, media, and schemas between Strapi v5 installat
 - Hash-based media deduplication
 - Automatic ID remapping for media references
 - Complex relation linking (nested components, dynamic zones)
-- Auto-creation of missing locales
+- Conservative locale creation that avoids duplicate locale records
+- Default locale synchronization between source and target Strapi installations
 - Pre-boot schema synchronization
 - Draft and publish state handling
 - Direct URL import support
@@ -173,6 +175,13 @@ strapi-migrate import <path> [options]
 | `--skip-schema` | Skipped | Imported | Imported | Imported |
 | `--skip-media` | Imported | Skipped | Imported | Imported |
 | `--skip-schema --skip-media` | Skipped | Skipped | Imported | Imported |
+
+#### Strapi v5 Notes
+
+- Export merges draft and published document variants by `documentId + locale`, so published-only entries are not omitted.
+- Single types are imported per locale using the locale-specific document variant and preserve published state.
+- Export records the source default locale explicitly, because Strapi stores it outside the locale rows.
+- Locale synchronization creates only missing locales, sanitizes imported locale metadata before creation, and updates the target default locale to match the exported source locale.
 
 #### Examples
 
