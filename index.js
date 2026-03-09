@@ -37,6 +37,7 @@ program.command('export')
   .option('--all', 'Export all api:: content types without prompting')
   .option('--filter-api <pattern>', 'Export content types where collectionName matches this regex pattern')
   .option('--filter-components <pattern>', 'Export only components where collectionName matches this regex pattern')
+  .option('--output-dir <path>', 'Directory where the exported .tar.gz archive will be written (default: ./export-data)')
   .option('--dry-run', 'Preview what would be exported without creating any files')
   .action((types, options) => {
     // Validate mutually exclusive options

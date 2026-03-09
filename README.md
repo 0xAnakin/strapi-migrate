@@ -89,6 +89,7 @@ strapi-migrate export [types...] [options]
 | `--all` | Export all API content types |
 | `--filter-api <pattern>` | Filter types by `collectionName` regex |
 | `--filter-components <pattern>` | Filter components by `collectionName` regex |
+| `--output-dir <path>` | Write the exported archive into this directory |
 | `--dry-run` | Preview without creating files |
 
 > **Note**: `[types...]`, `--all`, `--filter-api`, and `--filter-components` are mutually exclusive. Use only one. `--dry-run` can be combined with any.
@@ -109,6 +110,9 @@ strapi-migrate export
 # Export everything
 strapi-migrate export --all
 
+# Export to a custom directory
+strapi-migrate export --all --output-dir ../backups/strapi
+
 # Export specific types
 strapi-migrate export api::article.article api::category.category
 
@@ -122,7 +126,7 @@ strapi-migrate export --all --dry-run
 
 #### Output
 
-Archives are saved to `./export-data/` as:
+Archives are saved to `./export-data/` by default, or to the directory passed via `--output-dir`, as:
 ```
 export-YYYY-MM-DDTHH-mm-ss-sssZ.tar.gz
 ```
